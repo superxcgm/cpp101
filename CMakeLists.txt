@@ -3,4 +3,4 @@ project(cpp101)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(cpp101 main.cpp)
+add_executable(cpp101 main.cpp ObjectOriented/Complex.cpp ObjectOriented/Complex.h ObjectOriented/main.cpp ObjectOriented/main.h)

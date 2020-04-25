@@ -1,6 +1,8 @@
 #include <iostream>
+#include "ObjectOriented/main.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    ObjectOriented::main();
+
     return 0;
 }
