@@ -1,8 +1,7 @@
-#include <iostream>
-#include "ObjectOriented/main.h"
+#include "InputOutput/main.h"
 
 int main() {
-    ObjectOriented::main();
-
+//    ObjectOriented::main();
+    InputOutput::main();
     return 0;
 }
