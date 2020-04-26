@@ -31,8 +31,16 @@ namespace ObjectOriented {
         e = ++d;
         std::cout << "e:" << e << std::endl;
 
+        std::cout<< "e == d " << (e == d) << std::endl;
+        std::cout<< "e == a " << (e == a) << std::endl;
+        std::cout<< "e != d " << (e != d) << std::endl;
+        std::cout<< "e != a " << (e != a) << std::endl;
+
         Complex tmp;
         std::cin >> tmp;
+        std::cout << tmp << std::endl;
+
+        tmp += a;
         std::cout << tmp << std::endl;
 
         return 0;

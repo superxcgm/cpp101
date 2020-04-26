@@ -27,12 +27,18 @@ Complex::~Complex() {
     std::cout << "Complex::~Complex()" << std::endl;
 }
 
-Complex Complex::operator+(const Complex &other) {
+Complex Complex::operator+(const Complex &other) const {
 //    Complex ret;
 //    ret._real = _real + other._real;
 //    ret._image = _image + other._image;
 //    return ret; // 可能会触发拷贝构造
     return Complex(_real + other._real, _image + other._image);
+}
+
+Complex &Complex::operator+=(const Complex &other) {
+    _real += other._real;
+    _image += other._image;
+    return *this;
 }
 
 Complex &Complex::operator=(const Complex &other) {
@@ -43,7 +49,7 @@ Complex &Complex::operator=(const Complex &other) {
     return *this;
 }
 
-Complex& Complex::operator++() {
+Complex &Complex::operator++() {
     _real++;
     _image++;
     return *this;
@@ -66,4 +72,15 @@ std::ostream &operator<<(std::ostream &os, const Complex &complex) {
 std::istream &operator>>(std::istream &is, Complex &complex) {
     is >> complex._real >> complex._image;
     return is;
+}
+
+bool Complex::operator==(const Complex &other) const {
+    if (&other == this) {
+        return true;
+    }
+    return _real == other._real && _image == other._image;
+}
+
+bool Complex::operator!=(const Complex &other) const {
+    return !(*this == other);
 }
