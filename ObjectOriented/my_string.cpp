@@ -7,7 +7,7 @@
 #include "my_string.h"
 
 string::string(const char *str) {
-    if (str == nullptr) {
+    if (!str) {
         allocate_memory(1);
     } else {
         int len = strlen(str);
@@ -33,16 +33,38 @@ string &string::operator=(const string &other) {
     }
     delete []m_data;
     int len = strlen(other.m_data);
+    allocate_memory(len + 1);
     strcpy(m_data, other.m_data);
     return *this;
 }
 
 void string::allocate_memory(int len) {
-    m_data = new char[len + 1];
-    if (m_data != nullptr) {
+    m_data = new char[len];
+    if (m_data) {
         *m_data = '\0';
     } else {
         exit(-1);
+    }
+}
+
+std::ostream &operator<<(std::ostream &os, const string &string) {
+    os << string.m_data;
+    return os;
+}
+
+string &string::operator=(string &&rhs) noexcept {
+    if (this != &rhs) {
+        delete[] m_data;
+        m_data = rhs.m_data;
+        rhs.m_data = nullptr;
+    }
+    return *this;
+}
+
+string::string(string &&other) {
+    if (other.m_data) {
+        m_data = other.m_data;
+        other.m_data = nullptr;
     }
 }
 

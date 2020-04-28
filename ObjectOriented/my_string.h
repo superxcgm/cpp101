@@ -6,6 +6,8 @@
 #define CPP101_OBJECT_ORIENTED_STRING_H
 
 
+#include <ostream>
+
 class string {
 public:
     string(const char *str = nullptr);
@@ -20,6 +22,7 @@ public:
 
     string &operator=(string &&rhs) noexcept;
 
+    friend std::ostream &operator<<(std::ostream &os, const string &string);
 
 private:
     char *m_data;
