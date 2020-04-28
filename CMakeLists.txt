@@ -3,4 +3,4 @@ project(cpp101)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(cpp101 main.cpp ObjectOriented/Complex.cpp ObjectOriented/Complex.h ObjectOriented/main.cpp ObjectOriented/main.h InputOutput/main.cpp InputOutput/main.h ObjectOriented/my_string.cpp ObjectOriented/my_string.h ObjectOriented/Vector.cpp ObjectOriented/Vector.h ObjectOriented/Shape.cpp ObjectOriented/Shape.h)
+add_executable(cpp101 main.cpp ObjectOriented/Complex.cpp ObjectOriented/Complex.h ObjectOriented/main.cpp ObjectOriented/main.h InputOutput/main.cpp InputOutput/main.h ObjectOriented/my_string.cpp ObjectOriented/my_string.h ObjectOriented/Vector.cpp ObjectOriented/Vector.h ObjectOriented/Shape.cpp ObjectOriented/Shape.h DesignPattern/Singleton.cpp DesignPattern/Singleton.h DesignPattern/main.cpp DesignPattern/main.h)
