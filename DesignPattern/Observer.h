@@ -18,14 +18,14 @@ public:
 class User1: public Observer {
 public:
     void update(void *p_arg) override {
-        std::cout << "User1 Got News: " << (const char *)p_arg  << std::endl;
+        std::cout << "User1 Got News: " << reinterpret_cast<const char *>(p_arg)  << std::endl;
     }
 };
 
 class User2: public Observer {
 public:
     void update(void *p_arg) override {
-        std::cout << "User2 Got News: " << (const char *)p_arg  << std::endl;
+        std::cout << "User2 Got News: " << reinterpret_cast<const char *>(p_arg)  << std::endl;
     }
 };
 
