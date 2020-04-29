@@ -6,7 +6,7 @@
 int main() {
 //    ObjectOriented::main();
 //    InputOutput::main();
-//    DesignPattern::main();
-    RAII::main();
+    DesignPattern::main();
+//    RAII::main();
     return 0;
 }
