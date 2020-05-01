@@ -4,6 +4,8 @@
 #include "RAII/main.h"
 #include "language/main.h"
 #include "generic/main.h"
+#include "STL/main.h"
+#include "random/main.h"
 
 int main() {
 //    ObjectOriented::main();
@@ -11,6 +13,8 @@ int main() {
 //    DesignPattern::main();
 //    RAII::main();
 //    language::main();
-    generic::main();
+//    generic::main();
+//    STL::main();
+    my_random::main();
     return 0;
 }
