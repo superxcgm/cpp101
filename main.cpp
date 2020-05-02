@@ -14,7 +14,7 @@ int main() {
 //    RAII::main();
 //    language::main();
 //    generic::main();
-//    STL::main();
-    my_random::main();
+    STL::main();
+//    my_random::main();
     return 0;
 }

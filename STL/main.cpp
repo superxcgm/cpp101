@@ -136,11 +136,47 @@ void algorithm_demo() {
     int arr[] = {0, 1, 2, 3, 3, 4, 4, 5, 6, 6, 7, 7, 7, 8};
     int len = sizeof(arr) / sizeof(arr[0]);
 //    std::cout << std::count(arr, arr + len, 7) << std::endl;
-    std::cout << std::count_if(arr, arr + len, std::bind(std::less<>(), std::placeholders::_1,7)) << std::endl;
+    std::cout << std::count_if(arr, arr + len, std::bind(std::less<>(), std::placeholders::_1, 7)) << std::endl;
     std::cout << std::binary_search(arr, arr + len, 4) << std::endl;
     std::vector<int> vec = {3, 4};
     auto iter = std::search(arr, arr + len, vec.begin(), vec.end());
     std::cout << iter - arr << std::endl;
+}
+
+void dfs(const char *chs, int len, int deep, std::map<char, bool> &visit, char *record) {
+    if (deep == len) {
+        for (int i = 0; i < len; ++i) {
+            std::cout << record[i];
+        }
+        std::cout << std::endl;
+        return;
+    }
+    for (int i = 0; i < len; ++i) {
+        if (!visit[chs[i]]) {
+            visit[chs[i]] = true;
+            record[deep] = chs[i];
+            dfs(chs, len, deep + 1, visit, record);
+            visit[chs[i]] = false;
+        }
+    }
+}
+
+void permutation() {
+    char chs[] = "123";
+    int len = strlen(chs);
+    std::map<char, bool> visit;
+    char record[len];
+    dfs(chs, len, 0, visit, record);
+}
+
+void STL_permutation() {
+    char chs[] = "abc";
+    int len = strlen(chs);
+    do
+    {
+        std::cout << chs << std::endl;
+    }while (std::next_permutation(chs, chs + len));
+
 }
 
 int STL::main() {
@@ -151,6 +187,8 @@ int STL::main() {
 
 //    function_demo();
 
-    algorithm_demo();
+//    algorithm_demo();
+    permutation();
+//    STL_permutation();
     return 0;
 }
