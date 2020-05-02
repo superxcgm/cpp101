@@ -172,10 +172,30 @@ void permutation() {
 void STL_permutation() {
     char chs[] = "abc";
     int len = strlen(chs);
-    do
-    {
+    do {
         std::cout << chs << std::endl;
-    }while (std::next_permutation(chs, chs + len));
+    } while (std::next_permutation(chs, chs + len));
+
+}
+
+void priority_queue() {
+    std::priority_queue<int> p; // 默认是最大小优先
+    p.push(3);
+    p.push(1);
+    p.push(2);
+    while (!p.empty()) {
+        std::cout << p.top() << std::endl;
+        p.pop();
+    }
+
+    std::priority_queue<int, std::vector<int>, std::greater<>> pq;
+    pq.push(3);
+    pq.push(1);
+    pq.push(2);
+    while (!pq.empty()) {
+        std::cout << pq.top() << std::endl;
+        pq.pop();
+    }
 
 }
 
@@ -188,7 +208,9 @@ int STL::main() {
 //    function_demo();
 
 //    algorithm_demo();
-    permutation();
+//    permutation();
 //    STL_permutation();
+
+    priority_queue();
     return 0;
 }
