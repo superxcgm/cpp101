@@ -59,10 +59,42 @@ void bank_demo() {
     std::cout << money << std::endl;
 }
 
+void thread_swap() {
+    std::thread t1([]() {
+        ;
+    });
+    std::thread t2([]() {
+        ;
+    });
+
+    std::cout << "Thread 1's id is: " << t1.get_id() << std::endl;
+    std::cout << "Thread 2's id is: " << t2.get_id() << std::endl;
+    std::swap(t1, t2);
+    std::cout << "Thread 1's id is: " << t1.get_id() << std::endl;
+    std::cout << "Thread 2's id is: " << t2.get_id() << std::endl;
+    t1.join();
+    t2.join();
+}
+
+void thread_move() {
+    std::thread t1([](){
+        ;
+    });
+    std::cout << "thread 1's id is: " << t1.get_id() << std::endl;
+    std::thread t2 = move(t1);
+    std::cout << "thread 1's id is: " << t1.get_id() << std::endl;
+    std::cout << "thread 2's id is: " << t2.get_id() << std::endl;
+    t2.join();
+}
+
 int my_thread::main() {
 
 //    thread_demo();
 
-    bank_demo();
+//    bank_demo();
+
+//    thread_swap();
+
+    thread_move();
     return 0;
 }
