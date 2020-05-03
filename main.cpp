@@ -7,6 +7,7 @@
 #include "STL/main.h"
 #include "random/main.h"
 #include "boost/main.h"
+#include "thread/main.h"
 
 int main() {
 //    ObjectOriented::main();
@@ -17,6 +18,7 @@ int main() {
 //    generic::main();
 //    STL::main();
 //    my_random::main();
-    cpp_101_boost::main();
+//    cpp_101_boost::main();
+    my_thread::main();
     return 0;
 }
