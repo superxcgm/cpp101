@@ -21,11 +21,48 @@ void T2(const char *str) {
     lock.unlock();
 }
 
-int my_thread::main() {
+void thread_demo() {
     std::thread t1(T1);
     std::thread t2(T2, "你好");
 
     t1.join();
     t2.join();
+}
+
+void deposit(std::mutex &mutex, int *money) {
+    for (int i = 0; i < 1000; i++) {
+        mutex.lock();
+        (*money)++;
+        mutex.unlock();
+    }
+}
+
+void withdraw(std::mutex &mutex, int *money) {
+    for (int i = 0; i < 1000; i++) {
+        mutex.lock();
+        (*money)--;
+        mutex.unlock();
+    }
+}
+
+void bank_demo() {
+    int money = 2000;
+    std::mutex mutex;
+    std::cout << money << std::endl;
+
+    std::thread t1(deposit, std::ref(mutex), &money);
+    std::thread t2(withdraw, std::ref(mutex), &money);
+
+    t1.join();
+    t2.join();
+
+    std::cout << money << std::endl;
+}
+
+int my_thread::main() {
+
+//    thread_demo();
+
+    bank_demo();
     return 0;
 }
