@@ -16,9 +16,9 @@ int main() {
 //    RAII::main();
 //    language::main();
 //    generic::main();
-//    STL::main();
+    STL::main();
 //    my_random::main();
 //    cpp_101_boost::main();
-    my_thread::main();
+//    my_thread::main();
     return 0;
 }
