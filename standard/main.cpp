@@ -28,6 +28,7 @@ auto foo(double a, int b) -> double {
     return a + b;
 }
 
+// 类型别名模板
 template<typename T>
 using arr12 = std::array<T, 12>;
 
@@ -60,9 +61,13 @@ void _11_demo() {
 
     // #2 declaration
     // #3 auto
+    auto auto_arr = new auto(10);
+    // auto无法推导数组类型
     // 见前面sum函数的实现
+    // auto只能对变量进行类型推导
 
     // #3 decltype
+    // 主要用于表达式类型推导
     int j = 3;
     decltype(j) j1; // j1 has same type to j
     j1 = 4;
@@ -187,9 +192,82 @@ void _11_demo() {
     // #2 其他
     // 并行编程、random、chrono、 tuple、 ratio、 regex
 
+    // #2 外部模板
+    // 只要在每个编译单元（文件）中编译的代码遇到了被完整定义的模板，都会实例化，这就产生了重复实例化而导致的编译时间的增加。
+    // C++11引入外部模板来解决这个问题
+//    template class std::vector<bool>;          // 强行实例化
+//    extern template class std::vector<double>; // 不在该当前编译文件中实例化模板
+
+    // #2 模板默认参数
+//    template<typename T = int, typename U = int>
+//    auto add(T x, U y) -> decltype(x+y) {
+//        return x+y;
+//    }
+}
+
+// C++14, 返回类型推导
+template<typename T, typename U>
+auto foo1(T x, U y) {
+    return x + y;
+}
+
+void _14_demo() {
+    // 返回类型推导
+    auto sum = foo1(2, 2.3);
+    cout << sum << endl;
+
+    // TODO: decltype(auto)
+}
+
+
+std::tuple<int, double, std::string> return_tuple() {
+    return std::make_tuple(1, 2.3, "456");
+}
+
+template<typename T>
+auto print_type_info(const T &t) {
+    // 编译期可以优化，使得实例化后的代码不包含分支语句
+    if constexpr (std::is_integral<T>::value) {
+        return t + 1;
+    } else {
+        return t + 0.001;
+    }
+}
+
+template<typename ... T>
+auto sum1(T ... t) {
+    return (t + ...);
+}
+
+template <auto value>
+void fn() {
+    cout << value << endl;
+}
+
+void _17_demo() {
+    // 结构化绑定
+    auto[x, y, z] = return_tuple();
+    cout << x << ", " << y << ", " << z << endl;
+
+    // if语句中声明变量
+    if (auto[a, b, c] = return_tuple(); a == 1) {
+        cout << "haha" << endl;
+    }
+
+    // if constexpr
+    cout << print_type_info(5) << endl;
+    cout << print_type_info(3.14) << endl;
+
+    // 折叠表达式
+    cout << sum1(1, 2, 3.14, 4, 5) << endl;
+
+    // 非类型模板参数推导
+    fn<10>();
 }
 
 int standard::main() {
-    _11_demo();
+//    _11_demo();
+//    _14_demo();
+    _17_demo();
     return 0;
 }

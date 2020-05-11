@@ -19,6 +19,7 @@ void show_list(const T &value) {
 
 template<typename T, typename ...Args>
 void show_list(const T &value, const Args &... args) {
+//    sizeof...(args) 能计算个数
     cout << value << ", ";
     show_list(args...);
 }
