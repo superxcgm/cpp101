@@ -183,6 +183,10 @@ void _11_demo() {
 
     // #2 可变参数模板
     show_list(1, 3.1, "haha", 'a');
+
+    // #2 其他
+    // 并行编程、random、chrono、 tuple、 ratio、 regex
+
 }
 
 int standard::main() {
