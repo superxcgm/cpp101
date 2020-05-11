@@ -147,6 +147,31 @@ void _11_demo() {
     cout << "rd3 value and address: " << rd3 << ", " << &rd3 << endl;
 
     // 返回函数体内的局部变量时，g++优化有可能让数据直接构造到其受益方上，即不产生临时变量，避免了不必要的拷贝/移动。
+    // #2 移动
+    // 参考Useless
+
+    // #2 新的类功能
+    // #3 默认的方法和禁用的方法
+    // default只能用于6个特殊成员函数，但delete可用于任何成员函数。有一种用法是禁止特定的转换。
+
+    // #3 委托构造函数
+    class Notes {
+        int k;
+        double x;
+    public:
+        Notes(int k, double x) : k(k), x(x) {}
+
+        Notes() : Notes(0, 0.0) {} // 委托
+    };
+
+    // #3 继承构造函数
+    // 可以在子类中使用`using 基类`语法使子类继承基类的构造函数，当构造子类时，如果构造函数和子类的构造函数都不匹配，则可以匹配继承来的父类的构造函数。
+
+    // #3 管理虚方法：override和final
+    // override基本于Java中的@Override注解功能是一样的
+    // final禁止子类重新定义指定函数
+
+    // #2 Lambda
 
 }
 
