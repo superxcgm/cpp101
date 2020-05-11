@@ -3,6 +3,7 @@
 //
 
 #include "main.h"
+#include "variadic.h"
 #include <iostream>
 #include <vector>
 #include <array>
@@ -172,7 +173,16 @@ void _11_demo() {
     // final禁止子类重新定义指定函数
 
     // #2 Lambda
+    // [](int x) {return x % 3 == 0}
+    // [](double x) ->double { int y = x; return x - y;}
+    // [&] 按引用捕获所有局部变量，[=]按值拷贝捕获所有变量。[ted, &ed] 按值拷贝捕获ted，按引用捕获ed
+    //
 
+    // #2 包装器
+    // 使用不同的参数类型调用同一个模板函数可以会产生大量的实例。如果参数中有函数的，可以考虑用std::function以减少不必要的实例化。
+
+    // #2 可变参数模板
+    show_list(1, 3.1, "haha", 'a');
 }
 
 int standard::main() {
