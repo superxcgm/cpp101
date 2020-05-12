@@ -4,11 +4,13 @@
 
 #include "main.h"
 #include "variadic.h"
+#include "thread.h"
 #include <iostream>
 #include <vector>
 #include <array>
 #include <list>
 #include <valarray>
+#include <regex>
 
 using std::cout;
 using std::endl;
@@ -42,6 +44,16 @@ void ref(std::string &str) {
 
 void ref(std::string &&str) {
     cout << "右值：" << str << endl;
+}
+
+auto get_student(int id) {
+    if (id == 0) {
+        return std::make_tuple(3.8, 'A', "张三");
+    }
+    if (id == 1) {
+        return std::make_tuple(2.9, 'C', "李四");
+    }
+    return std::make_tuple(1.7, 'D', "王五");
 }
 
 void _11_demo() {
@@ -206,7 +218,33 @@ void _11_demo() {
     show_list(1, 3.1, "haha", 'a');
 
     // #2 其他
-    // 并行编程、random、chrono、 tuple、 ratio、 regex
+    // random、chrono、 ratio
+
+    // #3 tuple
+    auto student = get_student(0);
+    cout << "GPA: " << std::get<0>(student) << ", "
+         << "成绩：" << std::get<1>(student) << ", "
+         << "姓名：" << std::get<2>(student) << endl;
+
+    double gpa;
+    char grade;
+    std::string name;
+    std::tie(gpa, grade, name) = get_student(1);
+    cout << "GPA: " << gpa << ", "
+         << "成绩：" << grade << ", "
+         << "姓名：" << name << endl;
+
+    // #3 regex
+    std::string fnames[] = {"foo.txt", "bar.txt", "test", "a0.txt", "AAA.txt"};
+    std::regex txt_regex("[a-z]+\\.txt");
+    for (const auto &fname: fnames) {
+        cout << fname << ": " << std::regex_match(fname, txt_regex) << endl;
+    }
+    // 还能获取子匹配的结果，这里先不列出
+
+    // #3 并行编程
+    // 见standard/thread.cpp
+
 
     // #2 外部模板
     // 只要在每个编译单元（文件）中编译的代码遇到了被完整定义的模板，都会实例化，这就产生了重复实例化而导致的编译时间的增加。
@@ -248,6 +286,8 @@ void _14_demo() {
     auto add1 = [](auto x, auto y) {
         return x + y;
     };
+
+    // make_unique()
 }
 
 
@@ -297,8 +337,9 @@ void _17_demo() {
 }
 
 int standard::main() {
-    _11_demo();
+//    _11_demo();
 //    _14_demo();
 //    _17_demo();
+    standard::thread::main();
     return 0;
 }

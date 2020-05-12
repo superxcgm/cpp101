@@ -34,6 +34,8 @@ void deposit(std::mutex &mutex, int *money) {
         mutex.lock();
         (*money)++;
         mutex.unlock();
+        // 手动释放是比较危险的，就像手动释放内存一样，如果发生了异常，就有可能导致没有释放
+        // 这里应该使用std::lock_guard
     }
 }
 
