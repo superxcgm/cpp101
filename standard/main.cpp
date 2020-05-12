@@ -36,6 +36,14 @@ inline double f_rvref(double tf) {
     return 5.0 * (tf = 32.0) / 9.0;
 }
 
+void ref(std::string &str) {
+    cout << "左值：" << str << endl;
+}
+
+void ref(std::string &&str) {
+    cout << "右值：" << str << endl;
+}
+
 void _11_demo() {
     // #2 new type
     long long ll = 2147483648;
@@ -152,6 +160,14 @@ void _11_demo() {
     cout << "rd2 value and address: " << rd2 << ", " << &rd2 << endl;
     cout << "rd3 value and address: " << rd3 << ", " << &rd3 << endl;
 
+    std::string lv1 = "string, "; // 左值
+    // 如果一个prvalue被绑定到一个引用上，它的生命周期则会延长到跟这个引用变量一样长
+    const std::string &lv2 = lv1 + lv1; // 常量左值引用延长了临时变量的生命周期
+    std::string &&rv2 = lv1 + lv2; // 右值引用延长了临时变量的生命周期
+    std::string &&rv3 = std::move(lv1 + lv2); // prvalue变成了xvalue，生命周期没有延长，这里会产生一个ub
+
+    ref(rv2); // 声明的右值引用变量实际上是个左值
+
     // 返回函数体内的局部变量时，g++优化有可能让数据直接构造到其受益方上，即不产生临时变量，避免了不必要的拷贝/移动。
     // #2 移动
     // 参考Useless
@@ -181,7 +197,7 @@ void _11_demo() {
     // [](int x) {return x % 3 == 0}
     // [](double x) ->double { int y = x; return x - y;}
     // [&] 按引用捕获所有局部变量，[=]按值拷贝捕获所有变量。[ted, &ed] 按值拷贝捕获ted，按引用捕获ed
-    //
+    // 值拷贝发生在lambda表达式创建的时候，而不是调用时
 
     // #2 包装器
     // 使用不同的参数类型调用同一个模板函数可以会产生大量的实例。如果参数中有函数的，可以考虑用std::function以减少不必要的实例化。
@@ -216,7 +232,22 @@ void _14_demo() {
     auto sum = foo1(2, 2.3);
     cout << sum << endl;
 
-    // TODO: decltype(auto)
+    // decltype(auto)
+    int i = 2;
+    decltype(auto) haha = i; // 等价于decltype(i) haha = i; 主要用在转发函数模板中
+
+    // lambda表达式捕获
+    auto important = std::make_unique<int>(1);
+    auto add = [v1 = 1, v2 = std::move(important)](int x, int y) {
+        return x + y + v1 + (*v2);
+    };
+    cout << add(3, 4) << endl;
+
+    // 泛型lambda
+    // 参数表里的auto等价于template，会在调用时进行实例化
+    auto add1 = [](auto x, auto y) {
+        return x + y;
+    };
 }
 
 
@@ -239,7 +270,7 @@ auto sum1(T ... t) {
     return (t + ...);
 }
 
-template <auto value>
+template<auto value>
 void fn() {
     cout << value << endl;
 }
@@ -266,8 +297,8 @@ void _17_demo() {
 }
 
 int standard::main() {
-//    _11_demo();
+    _11_demo();
 //    _14_demo();
-    _17_demo();
+//    _17_demo();
     return 0;
 }
