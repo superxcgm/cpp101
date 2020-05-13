@@ -5,12 +5,14 @@
 #include "main.h"
 #include "variadic.h"
 #include "thread.h"
+#include "future.h"
 #include <iostream>
 #include <vector>
 #include <array>
 #include <list>
 #include <valarray>
 #include <regex>
+#include <map>
 
 using std::cout;
 using std::endl;
@@ -244,6 +246,8 @@ void _11_demo() {
 
     // #3 并行编程
     // 见standard/thread.cpp
+    // standard/future
+
 
 
     // #2 外部模板
@@ -257,6 +261,9 @@ void _11_demo() {
 //    auto add(T x, U y) -> decltype(x+y) {
 //        return x+y;
 //    }
+
+    // 移除的部分
+    // register 弃用
 }
 
 // C++14, 返回类型推导
@@ -316,11 +323,14 @@ void fn() {
 }
 
 void _17_demo() {
+    // 移除的部分
+    // register 移除，但保留关键字
+
     // 结构化绑定
     auto[x, y, z] = return_tuple();
     cout << x << ", " << y << ", " << z << endl;
 
-    // if语句中声明变量
+    // if语句中声明变量(init if statement)
     if (auto[a, b, c] = return_tuple(); a == 1) {
         cout << "haha" << endl;
     }
@@ -334,12 +344,25 @@ void _17_demo() {
 
     // 非类型模板参数推导
     fn<10>();
+
+    // 模型参数推导
+    std::map<std::string, int> map_users_age{
+            {"Alex", 45},
+            {"John", 25}
+    };
+    std::map map_copy{map_users_age}; // 这里不用写类型
+
+    // 表达式求值顺序
+    // f(a, b, c) // a, b, c 三者的顺序还是没有限定，但是每个元素必须完成求值。比如下面的例子，不可在new T之后调用goo()，然后再调用unique_ptr<T>(...)
+    // foo(unique_ptr<T>(new T), goo());
+
 }
 
 int standard::main() {
 //    _11_demo();
 //    _14_demo();
 //    _17_demo();
-    standard::thread::main();
+//    standard::thread::main();
+    standard::future::main();
     return 0;
 }
