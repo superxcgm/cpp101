@@ -388,6 +388,17 @@ void any_demo() {
     }
 }
 
+std::string_view start_from_word(std::string_view str, std::string_view word) {
+    return str.substr(str.find(word));
+}
+
+void string_view_demo() {
+    std::string str {"Hello Amazing Programming Environment"};
+    auto sub_view  = start_from_word(str, "Programming Environment");
+    cout << sub_view << endl;
+    // string_view 只是一个窗口，它不持有字符串的内存，所以要注意string_view所引用的字符串的生命周期
+}
+
 void _17_demo() {
     // 移除的部分
     // register 移除，但保留关键字
@@ -439,6 +450,8 @@ void _17_demo() {
     variant_demo();
 
     any_demo();
+
+    string_view_demo();
 }
 
 int standard::main() {
