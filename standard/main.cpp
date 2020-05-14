@@ -13,6 +13,8 @@
 #include <valarray>
 #include <regex>
 #include <map>
+#include <any>
+#include <variant>
 
 using std::cout;
 using std::endl;
@@ -212,6 +214,7 @@ void _11_demo() {
     // [](double x) ->double { int y = x; return x - y;}
     // [&] 按引用捕获所有局部变量，[=]按值拷贝捕获所有变量。[ted, &ed] 按值拷贝捕获ted，按引用捕获ed
     // 值拷贝发生在lambda表达式创建的时候，而不是调用时
+    // 可以捕获this指针[this](){...}
 
     // #2 包装器
     // 使用不同的参数类型调用同一个模板函数可以会产生大量的实例。如果参数中有函数的，可以考虑用std::function以减少不必要的实例化。
@@ -322,6 +325,69 @@ void fn() {
     cout << value << endl;
 }
 
+std::optional<std::string> find_user(std::string username) {
+    if (username == "superxc") {
+        return "找到了";
+    }
+    return std::nullopt;
+}
+
+void optional_demo() {
+    auto user = find_user("superxc");
+
+    if (user) {
+        cout << *user << endl;
+    }
+
+}
+
+void variant_demo() {
+    std::variant<int, float, std::string> int_float_string;
+    static_assert(std::variant_size_v<decltype(int_float_string)> == 3);
+
+    struct PrintVisitor {
+        void operator()(int i) {
+            cout << "int: " << i << endl;
+        }
+
+        void operator()(float f) {
+            cout << "float: " << f << endl;
+        }
+
+        void operator()(const std::string &str) {
+            cout << "string: " << str << endl;
+        }
+    };
+
+    std::visit(PrintVisitor{}, int_float_string);
+
+    cout << "index = " << int_float_string.index() << endl;
+    int_float_string = 3.14f;
+
+    if (const auto int_ptr = std::get_if<float>(&int_float_string)) {
+        cout << "float1: " << *int_ptr << endl;
+    }
+
+    if (std::holds_alternative<float>(int_float_string)) {
+        cout << "The variant holds a float." << endl;
+    }
+}
+
+void any_demo() {
+    std::any a(12);
+
+    a = std::string("Hello!");
+    a = 3.14;
+
+    cout << std::any_cast<double>(a) << endl;
+
+    try {
+        cout << std::any_cast<std::string>(a) << endl;
+    } catch (const std::bad_any_cast &e) {
+        cout << e.what() << endl;
+    }
+}
+
 void _17_demo() {
     // 移除的部分
     // register 移除，但保留关键字
@@ -334,6 +400,7 @@ void _17_demo() {
     if (auto[a, b, c] = return_tuple(); a == 1) {
         cout << "haha" << endl;
     }
+    // switch(init; condition)
 
     // if constexpr
     cout << print_type_info(5) << endl;
@@ -356,13 +423,30 @@ void _17_demo() {
     // f(a, b, c) // a, b, c 三者的顺序还是没有限定，但是每个元素必须完成求值。比如下面的例子，不可在new T之后调用goo()，然后再调用unique_ptr<T>(...)
     // foo(unique_ptr<T>(new T), goo());
 
+    // lambda
+    // [*this](){...} 按值拷贝对象 在C++14中，只能写成[self=*this](){...}
+
+    // 嵌套的命名空间
+//    namespace aa::bb::cc {
+//
+//    }
+
+    // Template Argument Deduction for Class Templates (CTAD)
+    std::array arr{1, 2, 3};
+
+    optional_demo();
+
+    variant_demo();
+
+    any_demo();
 }
 
 int standard::main() {
 //    _11_demo();
 //    _14_demo();
-//    _17_demo();
+    _17_demo();
 //    standard::thread::main();
-    standard::future::main();
+//    standard::future::main();
+
     return 0;
 }
