@@ -16,6 +16,7 @@
 #include <any>
 #include <variant>
 #include <charconv>
+#include <functional>
 
 using std::cout;
 using std::endl;
@@ -422,6 +423,18 @@ void string_conversions_demo() {
 //        cout << buf << ", filled: " << res.ptr - buf.data() << " characters" << endl;
 //    }
 //同样存在问题
+}
+
+void search_demo() {
+    // std::search在C++14引入，在C++17增强了，提供了执行策略（并行/串行），指定搜索算法(search object)
+//    using std::string;
+//    string testString = "Hello Super World";
+//    string needle = "Super";
+//    const auto it = std::search(std::begin(testString), std::end(testString), std::boyer_moore_searcher(std::begin(needle), end(needle)));
+//    MacOS的库对boyer_moore_searcher的支持有问题
+//    if (it == std::cend(testString)) {
+//        cout << "The string " << needle << " not found" << endl;
+//    }
 }
 
 void _17_demo() {
