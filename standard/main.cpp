@@ -18,6 +18,7 @@
 #include <charconv>
 #include <functional>
 #include <iomanip>
+#include <numeric>
 //#include <filesystem>
 
 using std::cout;
@@ -463,6 +464,35 @@ void filesystem_demo() {
 //    display_directory_tree(path_to_show);
 };
 
+void parallel_stl_algorigms_demo() {
+    // macOS还不支持
+//    std::vector vec = {1, 3, 2, 5};
+//    std::sort(std::execution::par, vec.begin(), vec.end());
+
+    std::vector<int> v(10);
+    std::iota(v.begin(), v.end(), 0);
+
+    // std::for_each()
+    std::for_each(v.begin(), v.end(), [](int &x) { x *= 10; });
+    std::for_each(v.cbegin(), v.cend(), [](int x) {
+        cout << x << ", ";
+    });
+    cout << endl;
+
+    //std::reduce()
+    //和std::accumulate()类似，但reduce一般会采用归并的做法，效率更高，reduce需要op满足交换率和结合率
+    //但是在macOS上的默认实现好像是和reduce一样的...
+    auto sum = std::reduce(v.cbegin(), v.cend(), 0);
+    // 0 + 10 + ... + 90
+    cout << sum << endl;
+
+    // 融合操作，先transform，然后reduce
+    // 0/2 + 10/2 + ... + 90/2
+    // 融合操作通常来说会有更好的性能表现
+    sum = std::transform_reduce(v.begin(), v.end(), 0, std::plus<int>{}, [](const int &i) { return i / 2; });
+    cout << sum << endl;
+}
+
 void _17_demo() {
     // 移除的部分
     // register 移除，但保留关键字
@@ -518,6 +548,8 @@ void _17_demo() {
     string_view_demo();
 
     string_conversions_demo();
+
+    parallel_stl_algorigms_demo();
 }
 
 int standard::main() {
