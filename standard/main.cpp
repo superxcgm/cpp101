@@ -17,6 +17,8 @@
 #include <variant>
 #include <charconv>
 #include <functional>
+#include <iomanip>
+//#include <filesystem>
 
 using std::cout;
 using std::endl;
@@ -436,6 +438,30 @@ void search_demo() {
 //        cout << "The string " << needle << " not found" << endl;
 //    }
 }
+
+//namespace fs = std::filesystem;
+
+//void display_directory_tree(const fs::path &path_to_scan, int level = 0) {
+//    for (const auto & entry: fs::directory_iterator(path_to_scan)) {
+//        const auto filename = entry.path().filename().string();
+//        if (entry.is_directory()) {
+//            cout << std::setw(level * 3) << "" << filename << endl;
+//            display_directory_tree(entry, level + 1);
+//        } else if(entry.is_regular_file()) {
+//            cout << std::setw(level * 3) << "" << filename << ", size " << fs::file_size(entry) << " bytes" << endl;
+//        } else {
+//            cout << std::setw(level * 3) << "" << " [?]" << filename << endl;
+//        }
+//    }
+//}
+
+void filesystem_demo() {
+//macOS的库还不支持filesystem
+//在gcc8+上支持，实测用Ubuntu 20.04可以编译过
+//    const fs::path path_to_show{fs::current_path()};
+//    cout << "listing files in the directory: " << fs::absolute(path_to_show).string() << endl;
+//    display_directory_tree(path_to_show);
+};
 
 void _17_demo() {
     // 移除的部分
