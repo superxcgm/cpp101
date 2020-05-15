@@ -15,6 +15,7 @@
 #include <map>
 #include <any>
 #include <variant>
+#include <charconv>
 
 using std::cout;
 using std::endl;
@@ -393,10 +394,34 @@ std::string_view start_from_word(std::string_view str, std::string_view word) {
 }
 
 void string_view_demo() {
-    std::string str {"Hello Amazing Programming Environment"};
-    auto sub_view  = start_from_word(str, "Programming Environment");
+    std::string str{"Hello Amazing Programming Environment"};
+    auto sub_view = start_from_word(str, "Programming Environment");
     cout << sub_view << endl;
     // string_view 只是一个窗口，它不持有字符串的内存，所以要注意string_view所引用的字符串的生命周期
+}
+
+void string_conversions_demo() {
+    const std::string int_str{"123456"};
+    int int_value = 0;
+    const auto res = std::from_chars(int_str.data(), int_str.data() + int_str.size(), int_value);
+
+    cout << int_value << endl;
+
+//    const std::string float_str{"3.14"};
+//    double float_value = 0.0;
+//    const auto format = std::chars_format::general;
+//    std::from_chars(float_str.data(), float_str.data() + float_str.size(), float_value, format);
+//macOS的库实现似乎有些问题
+
+
+//    std::string buf{"xxxxxxxx"};
+//    const int v = 1986;
+//    const auto res1 = std::to_chars(buf.data(), buf.data() + buf.size(), v);
+//    if (res1.ec == std::errc()) {
+//        // convert successful
+//        cout << buf << ", filled: " << res.ptr - buf.data() << " characters" << endl;
+//    }
+//同样存在问题
 }
 
 void _17_demo() {
@@ -452,6 +477,8 @@ void _17_demo() {
     any_demo();
 
     string_view_demo();
+
+    string_conversions_demo();
 }
 
 int standard::main() {
