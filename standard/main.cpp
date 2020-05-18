@@ -19,6 +19,7 @@
 #include <functional>
 #include <iomanip>
 #include <numeric>
+#include <random>
 //#include <filesystem>
 
 using std::cout;
@@ -493,6 +494,27 @@ void parallel_stl_algorigms_demo() {
     cout << sum << endl;
 }
 
+void other_changes_in_stl() {
+    // std::byte
+    constexpr std::byte c{255};
+    cout << std::to_integer<int>(c) << endl;
+
+    // splicing Maps and Sets
+    // New emplacement routines(try_emplace(), insert_or_assign())
+
+    // emplace*() return reference instead of void
+
+    // std::sample()
+    vector<int> vec(10);
+    std::iota(vec.begin(), vec.end(), 1);
+    std::vector<int> out;
+
+    std::sample(vec.begin(), vec.end(), std::back_inserter(out), 3, std::mt19937{std::random_device{}()});
+
+    std::for_each(out.cbegin(), out.cend(), [](int x) { cout << x << ", "; });
+    cout << endl;
+}
+
 void _17_demo() {
     // 移除的部分
     // register 移除，但保留关键字
@@ -550,6 +572,8 @@ void _17_demo() {
     string_conversions_demo();
 
     parallel_stl_algorigms_demo();
+
+    other_changes_in_stl();
 }
 
 int standard::main() {
